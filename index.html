@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorry Anjali 💌</title>
+    <title>🎉 Surprise For Didi 💌</title>
     <style>
         * {
             margin: 0;
@@ -19,9 +19,147 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            overflow: hidden;
         }
 
-        .container {
+        .surprise-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .surprise-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes popIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3) rotateZ(-45deg);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateZ(0deg);
+            }
+        }
+
+        .surprise-emoji {
+            font-size: 80px;
+            animation: bounce 1s ease infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .surprise-text h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .surprise-text p {
+            color: #f0f0f0;
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            animation: slideUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .open-button {
+            background: white;
+            color: #764ba2;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.8s ease 0.4s both;
+        }
+
+        .open-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .open-button:active {
+            transform: scale(0.95);
+        }
+
+        .floating-emojis {
+            position: absolute;
+            font-size: 30px;
+            animation: float-around 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float-around {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -30px); }
+            50% { transform: translate(-30px, -50px); }
+            75% { transform: translate(30px, -30px); }
+        }
+
+        .emoji1 { top: 10%; left: 10%; animation-delay: 0s; }
+        .emoji2 { top: 15%; right: 10%; animation-delay: 0.5s; }
+        .emoji3 { bottom: 20%; left: 15%; animation-delay: 1s; }
+        .emoji4 { bottom: 15%; right: 12%; animation-delay: 1.5s; }
+
+        /* Letter Container */
+        .letter-container {
             background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
@@ -29,6 +167,11 @@
             width: 100%;
             padding: 40px;
             animation: slideIn 0.8s ease-out;
+            display: none;
+        }
+
+        .letter-container.show {
+            display: block;
         }
 
         @keyframes slideIn {
@@ -54,15 +197,9 @@
         }
 
         @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-            25% {
-                transform: scale(1.1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1.2); }
         }
 
         h1 {
@@ -184,11 +321,6 @@
             animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .modal-content {
             background-color: white;
             margin: 5% auto;
@@ -245,19 +377,37 @@
     </style>
 </head>
 <body>
-    <div class="flowers flower1">🌹</div>
-    <div class="flowers flower2">💐</div>
-    <div class="flowers flower3">🌸</div>
-    <div class="flowers flower4">🌻</div>
+    <!-- SURPRISE SCREEN -->
+    <div class="surprise-container" id="surpriseScreen">
+        <div class="floating-emojis emoji1">🎁</div>
+        <div class="floating-emojis emoji2">💝</div>
+        <div class="floating-emojis emoji3">🎉</div>
+        <div class="floating-emojis emoji4">✨</div>
 
-    <div class="container">
+        <div class="surprise-box">
+            <div class="surprise-emoji">🎊</div>
+            <div class="surprise-text">
+                <h1>Surprise! 🎁</h1>
+                <p>I have something special prepared for you, Didi! 💕</p>
+                <button class="open-button" onclick="openLetter()">💌 Open Letter 💌</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LETTER SCREEN -->
+    <div class="letter-container" id="letterScreen">
+        <div class="flowers flower1">🌹</div>
+        <div class="flowers flower2">💐</div>
+        <div class="flowers flower3">🌸</div>
+        <div class="flowers flower4">🌻</div>
+
         <div class="header">
             <div class="heart">💔</div>
-            <h1>I'm Sorry, Anjali</h1>
+            <h1>I'm Sorry, Didi</h1>
         </div>
 
         <div class="letter-content">
-            <p>Dear Anjali,</p>
+            <p>Dear Didi,</p>
             <p>I want to sincerely apologize for what happened. That call bombing was completely by mistake, and I realize how annoying and frustrating it must have been for you. There's no excuse for not being more careful, and I feel genuinely sorry for bothering you like that.</p>
             <p>You've always been there for me, and the last thing I want to do is cause you any irritation or upset. You deserve better, and I promise to be more thoughtful and careful going forward.</p>
             <p>I know actions speak louder than words, so I'm committed to making it up to you. Whether it's just being more considerate or doing something special that you'd appreciate, I'm here for whatever you need.</p>
@@ -280,7 +430,7 @@
         <div class="modal-content">
             <span class="close" onclick="closeForgiveModal()">&times;</span>
             <h2>Thank You! 💕</h2>
-            <p>Your forgiveness means the world to me, Anjali. I promise to be more careful and thoughtful in the future.</p>
+            <p>Your forgiveness means the world to me. I promise to be more careful and thoughtful in the future.</p>
             <p>Let's make more happy memories together! 🌈</p>
             <button class="modal-btn" onclick="closeForgiveModal()">Close</button>
         </div>
@@ -297,6 +447,15 @@
     </div>
 
     <script>
+        function openLetter() {
+            const surpriseScreen = document.getElementById('surpriseScreen');
+            const letterScreen = document.getElementById('letterScreen');
+            
+            surpriseScreen.style.display = 'none';
+            letterScreen.classList.add('show');
+            createConfetti();
+        }
+
         function showForgiveModal() {
             document.getElementById('forgiveModal').style.display = 'block';
             createConfetti();
